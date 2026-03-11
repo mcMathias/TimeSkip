@@ -2,21 +2,21 @@
   <div class="raid-header">
     <h3>🏰 Raid Sign-up</h3>
     <div class="raid-controls">
-      <button class="btn-add-raid" (click)="openAddDayModal()">➕ Tilføj Raid Dag</button>
-      <button (click)="copyToDiscord()">📋 Kopier til Discord</button>
+      <button class="btn-add-raid" (click)="openAddDayModal()">➕ Add Raid Day</button>
+      <button (click)="copyToDiscord()">📋 Copy to Discord</button>
     </div>
   </div>
 
   <div class="raid-info" (click)="openInfoModal()">
     <h4>{{ info().name }} - {{ info().difficulty }}</h4>
-    <p>Raid tid: {{ info().time }} Server Time</p>
-    <small>✏️ Klik for at redigere</small>
+    <p>Raid time: {{ info().time }} Server Time</p>
+    <small>✏️ Click to edit</small>
   </div>
 
   <div class="raid-stats">
     <div class="raid-stat-box">
       <div class="stat-value">{{ stats().raidDays }}</div>
-      <div class="stat-label">Raid Dage</div>
+      <div class="stat-label">Raid Days</div>
     </div>
     <div class="raid-stat-box tanks">
       <div class="stat-value">{{ stats().tanks }}</div>
@@ -32,7 +32,7 @@
     </div>
     <div class="raid-stat-box maybes">
       <div class="stat-value">{{ stats().maybes }}</div>
-      <div class="stat-label">❓ Måske</div>
+      <div class="stat-label">❓ Maybe</div>
     </div>
   </div>
 
@@ -57,7 +57,7 @@
           </div>
           }
           @for (i of getEmptySlots(day, 'tank'); track $index) {
-          <div class="raid-slot empty">Ledig plads</div>
+          <div class="raid-slot empty">Open slot</div>
           }
         </div>
 
@@ -70,7 +70,7 @@
           </div>
           }
           @for (i of getEmptySlots(day, 'healer'); track $index) {
-          <div class="raid-slot empty">Ledig plads</div>
+          <div class="raid-slot empty">Open slot</div>
           }
         </div>
 
@@ -83,17 +83,17 @@
           </div>
           }
           @for (i of getEmptySlots(day, 'dps'); track $index) {
-          <div class="raid-slot empty">Ledig plads</div>
+          <div class="raid-slot empty">Open slot</div>
           }
         </div>
       </div>
 
-      <button class="raid-signup-btn" (click)="openSignupModal(day.id)">➕ Tilmeld dig</button>
+      <button class="raid-signup-btn" (click)="openSignupModal(day.id)">➕ Sign Up</button>
 
       @if (getMaybes(day).length > 0 || getAbsents(day).length > 0) {
       <div class="raid-bench">
         @if (getMaybes(day).length > 0) {
-        <h5>❓ Måske ({{ getMaybes(day).length }})</h5>
+        <h5>❓ Maybe ({{ getMaybes(day).length }})</h5>
         <div class="bench-list">
           @for (player of getMaybes(day); track player.name) {
           <span class="bench-player" (click)="removeSignup(day.id, player.name)">
@@ -103,7 +103,7 @@
         </div>
         }
         @if (getAbsents(day).length > 0) {
-        <h5 class="mt-1">❌ Afbud ({{ getAbsents(day).length }})</h5>
+        <h5 class="mt-1">❌ Absent ({{ getAbsents(day).length }})</h5>
         <div class="bench-list">
           @for (player of getAbsents(day); track player.name) {
           <span class="bench-player absent" (click)="removeSignup(day.id, player.name)">{{ player.name }}</span>
@@ -118,91 +118,91 @@
 </div>
 
 <-rwxr-xr-x Signup Modal -->
-  <div class="modal" [class.show]="showSignupModal()">
-    <div class="modal-content">
-      <h2>📝 Raid Tilmelding</h2>
-      <div class="form-group">
-        <label>Character Navn</label>
-        <input type="text" [ngModel]="playerName()" (ngModelChange)="playerName.set($event)"
-          placeholder="Dit character navn">
-      </div>
-      <div class="form-group">
-        <label>Rolle</label>
-        <select [ngModel]="playerRole()" (ngModelChange)="playerRole.set($event)">
-          <option value="tank">🛡️ Tank</option>
-          <option value="healer">💚 Healer</option>
-          <option value="dps">⚔️ DPS</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Status</label>
-        <select [ngModel]="playerStatus()" (ngModelChange)="playerStatus.set($event)">
-          <option value="coming">✅ Kommer</option>
-          <option value="maybe">❓ Måske</option>
-          <option value="absent">❌ Afbud</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Spec/Klasse (valgfrit)</label>
-        <input type="text" [ngModel]="playerSpec()" (ngModelChange)="playerSpec.set($event)"
-          placeholder="F.eks. Holy Paladin">
-      </div>
-      <div class="modal-buttons">
-        <button class="btn-cancel" (click)="closeSignupModal()">Annuller</button>
-        <button class="btn-confirm" (click)="confirmSignup()">Tilmeld</button>
-      </div>
+<div class="modal" [class.show]="showSignupModal()">
+  <div class="modal-content">
+    <h2>📝 Raid Sign-up</h2>
+    <div class="form-group">
+      <label>Character Name</label>
+      <input type="text" [ngModel]="playerName()" (ngModelChange)="playerName.set($event)"
+        placeholder="Your character name">
+    </div>
+    <div class="form-group">
+      <label>Role</label>
+      <select [ngModel]="playerRole()" (ngModelChange)="playerRole.set($event)">
+        <option value="tank">🛡️ Tank</option>
+        <option value="healer">💚 Healer</option>
+        <option value="dps">⚔️ DPS</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select [ngModel]="playerStatus()" (ngModelChange)="playerStatus.set($event)">
+        <option value="coming">✅ Coming</option>
+        <option value="maybe">❓ Maybe</option>
+        <option value="absent">❌ Absent</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Spec/Class (optional)</label>
+      <input type="text" [ngModel]="playerSpec()" (ngModelChange)="playerSpec.set($event)"
+        placeholder="E.g. Holy Paladin">
+    </div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" (click)="closeSignupModal()">Cancel</button>
+      <button class="btn-confirm" (click)="confirmSignup()">Sign Up</button>
     </div>
   </div>
+</div>
 
-  <-rwxr-xr-x Add Day Modal -->
-    <div class="modal" [class.show]="showAddDayModal()">
-      <div class="modal-content">
-        <h2>📅 Tilføj Raid Dag</h2>
-        <div class="form-group">
-          <label>Dag</label>
-          <select [ngModel]="newRaidDay()" (ngModelChange)="newRaidDay.set($event)">
-            <option value="Mandag">Mandag</option>
-            <option value="Onsdag">Onsdag</option>
-            <option value="Torsdag">Torsdag</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Dato (f.eks. 16.3.2026)</label>
-          <input type="text" [ngModel]="newRaidDate()" (ngModelChange)="newRaidDate.set($event)"
-            placeholder="DD.MM.YYYY">
-        </div>
-        <div class="modal-buttons">
-          <button class="btn-cancel" (click)="closeAddDayModal()">Annuller</button>
-          <button class="btn-confirm" (click)="confirmAddDay()">Tilføj</button>
-        </div>
-      </div>
+<-rwxr-xr-x Add Day Modal -->
+<div class="modal" [class.show]="showAddDayModal()">
+  <div class="modal-content">
+    <h2>📅 Add Raid Day</h2>
+    <div class="form-group">
+      <label>Day</label>
+      <select [ngModel]="newRaidDay()" (ngModelChange)="newRaidDay.set($event)">
+        <option value="Monday">Monday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+      </select>
     </div>
+    <div class="form-group">
+      <label>Date (e.g. 16.3.2026)</label>
+      <input type="text" [ngModel]="newRaidDate()" (ngModelChange)="newRaidDate.set($event)"
+        placeholder="DD.MM.YYYY">
+    </div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" (click)="closeAddDayModal()">Cancel</button>
+      <button class="btn-confirm" (click)="confirmAddDay()">Add</button>
+    </div>
+  </div>
+</div>
 
-    <-rwxr-xr-x Info Modal -->
-      <div class="modal" [class.show]="showInfoModal()">
-        <div class="modal-content">
-          <h2>⚙️ Raid Indstillinger</h2>
-          <div class="form-group">
-            <label>Raid Navn</label>
-            <input type="text" [ngModel]="infoName()" (ngModelChange)="infoName.set($event)"
-              placeholder="F.eks. Liberation of Undermine">
-          </div>
-          <div class="form-group">
-            <label>Difficulty</label>
-            <select [ngModel]="infoDifficulty()" (ngModelChange)="infoDifficulty.set($event)">
-              <option value="Normal">Normal</option>
-              <option value="Heroic">Heroic</option>
-              <option value="Mythic">Mythic</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Standard Raid Tid</label>
-            <input type="text" [ngModel]="infoTime()" (ngModelChange)="infoTime.set($event)"
-              placeholder="F.eks. 19:45 - 23:00">
-          </div>
-          <div class="modal-buttons">
-            <button class="btn-cancel" (click)="closeInfoModal()">Annuller</button>
-            <button class="btn-confirm" (click)="saveInfo()">Gem</button>
-          </div>
-        </div>
-      </div>
+<-rwxr-xr-x Info Modal -->
+<div class="modal" [class.show]="showInfoModal()">
+  <div class="modal-content">
+    <h2>⚙️ Raid Settings</h2>
+    <div class="form-group">
+      <label>Raid Name</label>
+      <input type="text" [ngModel]="infoName()" (ngModelChange)="infoName.set($event)"
+        placeholder="E.g. Liberation of Undermine">
+    </div>
+    <div class="form-group">
+      <label>Difficulty</label>
+      <select [ngModel]="infoDifficulty()" (ngModelChange)="infoDifficulty.set($event)">
+        <option value="Normal">Normal</option>
+        <option value="Heroic">Heroic</option>
+        <option value="Mythic">Mythic</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Default Raid Time</label>
+      <input type="text" [ngModel]="infoTime()" (ngModelChange)="infoTime.set($event)"
+        placeholder="E.g. 19:45 - 23:00">
+    </div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" (click)="closeInfoModal()">Cancel</button>
+      <button class="btn-confirm" (click)="saveInfo()">Save</button>
+    </div>
+  </div>
+</div>

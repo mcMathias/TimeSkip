@@ -78,7 +78,7 @@ export class MplusSignup {
 
   clearSlot(dayIndex: number, groupIndex: number, slotIndex: number, event: Event): void {
     event.stopPropagation();
-    if (confirm('Fjern denne tilmelding?')) {
+    if (confirm('Remove this sign-up?')) {
       this.mplusService.clearSlot(dayIndex, groupIndex, slotIndex);
     }
   }
@@ -88,7 +88,7 @@ export class MplusSignup {
   }
 
   removeGroup(dayIndex: number, groupIndex: number): void {
-    if (confirm('Er du sikker på at du vil fjerne denne gruppe?')) {
+    if (confirm('Are you sure you want to remove this group?')) {
       this.mplusService.removeGroup(dayIndex, groupIndex);
     }
   }
@@ -117,7 +117,7 @@ export class MplusSignup {
   }
 
   clearAllData(): void {
-    if (confirm('Er du sikker på at du vil slette ALLE tilmeldinger?')) {
+    if (confirm('Are you sure you want to delete ALL sign-ups?')) {
       this.mplusService.clearAllData();
     }
   }

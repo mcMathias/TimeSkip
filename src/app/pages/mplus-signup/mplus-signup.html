@@ -10,15 +10,15 @@
 
   <!-- Search Panel -->
   <div class="search-panel">
-    <h3>🔍 Find Din Tilmelding</h3>
+    <h3>🔍 Find Your Sign-up</h3>
     <div class="search-container">
       <input type="text" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)"
-        placeholder="Indtast dit character navn...">
-      <button class="btn-clear-search" (click)="searchTerm.set('')">✕ Ryd</button>
+        placeholder="Enter your character name...">
+      <button class="btn-clear-search" (click)="searchTerm.set('')">✕ Clear</button>
     </div>
     @if (searchResults().length > 0) {
     <div class="search-results">
-      <h4>📋 Dine tilmeldinger:</h4>
+      <h4>📋 Your sign-ups:</h4>
       @for (result of searchResults(); track $index) {
       <div class="search-result-item">
         <strong>Week {{ result.week }}</strong> - {{ result.day }} - {{ result.group }} - {{ result.role }}
@@ -31,7 +31,7 @@
 
   <!-- Stats Dashboard -->
   <div class="stats-dashboard">
-    <h3>📊 Tilmeldings Statistik (Denne Uge)</h3>
+    <h3>📊 Sign-up Statistics (This Week)</h3>
     <div class="stats-grid">
       <div class="stat-card tank">
         <span class="stat-number">{{ stats().tanks }}</span>
@@ -51,17 +51,17 @@
       </div>
       <div class="stat-card groups">
         <span class="stat-number">{{ stats().fullGroups }}/{{ stats().totalGroups }}</span>
-        <span class="stat-label">✅ Fyldte Grupper</span>
+        <span class="stat-label">✅ Full Groups</span>
       </div>
     </div>
   </div>
 
   <!-- Admin Panel -->
   <div class="admin-panel">
-    <h3>🛠️ Admin Kontrol</h3>
+    <h3>🛠️ Admin Controls</h3>
     <div class="admin-controls">
-      <button class="btn-clear" (click)="clearAllData()">🗑️ Ryd Alle Tilmeldinger</button>
-      <button class="btn-add-day" (click)="openNewWeekModal()">➕ Tilføj Ny Uge</button>
+      <button class="btn-clear" (click)="clearAllData()">🗑️ Clear All Sign-ups</button>
+      <button class="btn-add-day" (click)="openNewWeekModal()">➕ Add New Week</button>
     </div>
   </div>
 
@@ -72,7 +72,7 @@
     <div class="day-column">
       <div class="day-header">
         <h3>{{ day.date }}</h3>
-        <button class="btn-add-group" (click)="addGroup(dayIndex)">➕ Gruppe</button>
+        <button class="btn-add-group" (click)="addGroup(dayIndex)">➕ Group</button>
       </div>
 
       @for (group of day.groups; track $index; let groupIndex = $index) {
@@ -81,9 +81,9 @@
           <span class="group-name">{{ group.name }}</span>
           <div class="group-actions">
             <button class="btn-copy" (click)="copyGroupToDiscord(dayIndex, groupIndex)"
-              title="Kopier til Discord">📋</button>
+              title="Copy to Discord">📋</button>
             @if (day.groups.length > 1) {
-            <button class="btn-remove-group" (click)="removeGroup(dayIndex, groupIndex)" title="Fjern gruppe">✕</button>
+            <button class="btn-remove-group" (click)="removeGroup(dayIndex, groupIndex)" title="Remove group">✕</button>
             }
           </div>
         </div>
@@ -107,7 +107,7 @@
           }
           <button class="btn-clear-slot" (click)="clearSlot(dayIndex, groupIndex, slotIndex, $event)">✕</button>
           } @else {
-          <span class="empty-slot">Klik for at tilmelde</span>
+          <span class="empty-slot">Click to sign up</span>
           }
         </div>
         }
@@ -122,19 +122,19 @@
 <!-- Signup Modal -->
 <div class="modal" [class.show]="showSignupModal()">
   <div class="modal-content">
-    <h2>📝 Tilmeld dig</h2>
+    <h2>📝 Sign Up</h2>
     <div class="form-group">
-      <label>Character Navn</label>
+      <label>Character Name</label>
       <input type="text" [ngModel]="playerName()" (ngModelChange)="playerName.set($event)"
-        placeholder="Dit character navn">
+        placeholder="Your character name">
     </div>
     <div class="form-group">
-      <label>Server Tid (f.eks. 9:00)</label>
+      <label>Server Time (e.g. 9:00)</label>
       <input type="text" [ngModel]="serverTime()" (ngModelChange)="serverTime.set($event)" placeholder="HH:MM">
     </div>
     <div class="modal-buttons">
-      <button class="btn-cancel" (click)="closeSignupModal()">Annuller</button>
-      <button class="btn-confirm" (click)="confirmSignup()">Tilmeld</button>
+      <button class="btn-cancel" (click)="closeSignupModal()">Cancel</button>
+      <button class="btn-confirm" (click)="confirmSignup()">Sign Up</button>
     </div>
   </div>
 </div>
@@ -142,15 +142,15 @@
 <!-- New Week Modal -->
 <div class="modal" [class.show]="showNewWeekModal()">
   <div class="modal-content">
-    <h2>📅 Tilføj Ny Uge</h2>
+    <h2>📅 Add New Week</h2>
     <div class="form-group">
-      <label>Uge Navn</label>
+      <label>Week Name</label>
       <input type="text" [ngModel]="newWeekName()" (ngModelChange)="newWeekName.set($event)"
-        placeholder="F.eks. Week 3">
+        placeholder="E.g. Week 3">
     </div>
     <div class="modal-buttons">
-      <button class="btn-cancel" (click)="closeNewWeekModal()">Annuller</button>
-      <button class="btn-confirm" (click)="confirmNewWeek()">Opret Uge</button>
+      <button class="btn-cancel" (click)="closeNewWeekModal()">Cancel</button>
+      <button class="btn-confirm" (click)="confirmNewWeek()">Create Week</button>
     </div>
   </div>
 </div>

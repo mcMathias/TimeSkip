@@ -2,8 +2,8 @@
   <div class="roster-header">
     <h3>👥 TimeSkip Guild Roster (Ravencrest-EU)</h3>
     <div class="roster-controls">
-      <input type="text" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" placeholder="Søg spiller...">
-      <button (click)="loadRoster()">🔄 Opdater</button>
+      <input type="text" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" placeholder="Search player...">
+      <button (click)="loadRoster()">🔄 Refresh</button>
     </div>
   </div>
 
@@ -14,27 +14,27 @@
   @if (loading() && !roster().length) {
   <div class="roster-loading">
     <div class="spinner"></div>
-    <p>Henter guild data fra Raider.io...</p>
+    <p>Fetching guild data from Raider.io...</p>
   </div>
   } @else if (error()) {
   <div class="roster-error">
-    <h4>❌ Kunne ikke hente guild data</h4>
+    <h4>❌ Could not fetch guild data</h4>
     <p>{{ error() }}</p>
-    <button (click)="loadRoster()">🔄 Prøv igen</button>
+    <button (click)="loadRoster()">🔄 Try again</button>
   </div>
   } @else {
   <div class="roster-stats">
     <div class="roster-stat-box">
       <span class="stat-value">{{ roster().length }}</span>
-      <span class="stat-label">Medlemmer</span>
+      <span class="stat-label">Members</span>
     </div>
   </div>
 
   <table class="roster-table">
     <thead>
       <tr>
-        <th (click)="sortBy('name')">Navn</th>
-        <th (click)="sortBy('class')">Klasse</th>
+        <th (click)="sortBy('name')">Name</th>
+        <th (click)="sortBy('class')">Class</th>
         <th>Spec</th>
         <th (click)="sortBy('ilvl')">iLvl</th>
         <th (click)="sortBy('rio')">M+ Score</th>

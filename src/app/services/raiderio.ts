@@ -17,7 +17,7 @@ export class RaiderioService {
   async loadGuildRoster(): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
-    this.loadingProgress.set('Henter guild medlemmer...');
+    this.loadingProgress.set('Fetching guild members...');
 
     try {
       const response = await fetch(
@@ -25,7 +25,7 @@ export class RaiderioService {
       );
 
       if (!response.ok) {
-        throw new Error('Kunne ikke hente guild data');
+        throw new Error('Could not fetch guild data');
       }
 
       const data: GuildProfile = await response.json();
@@ -34,7 +34,7 @@ export class RaiderioService {
       // Load detailed character data
       await this.loadDetailedCharacterData();
     } catch (err) {
-      this.error.set(err instanceof Error ? err.message : 'Ukendt fejl');
+      this.error.set(err instanceof Error ? err.message : 'Unknown error');
       this.roster.set([]);
     } finally {
       this.loading.set(false);
@@ -89,7 +89,7 @@ export class RaiderioService {
       });
 
       await Promise.all(promises);
-      this.loadingProgress.set(`Henter karakter data: ${loaded}/${total}...`);
+      this.loadingProgress.set(`Fetching character data: ${loaded}/${total}...`);
 
       // Small delay to avoid rate limiting
       if (i + batchSize < members.length) {
@@ -97,7 +97,7 @@ export class RaiderioService {
       }
     }
 
-    this.loadingProgress.set('✅ Alle karakter data hentet!');
+    this.loadingProgress.set('✅ All character data fetched!');
   }
 
   getRioColor(score: number): string {

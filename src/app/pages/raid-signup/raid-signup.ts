@@ -28,7 +28,7 @@ export class RaidSignup {
   playerStatus = signal<'coming' | 'maybe' | 'absent'>('coming');
   playerSpec = signal('');
 
-  newRaidDay = signal('Mandag');
+  newRaidDay = signal('Monday');
   newRaidDate = signal('');
 
   infoName = signal('');
@@ -66,7 +66,7 @@ export class RaidSignup {
   }
 
   removeSignup(dayId: number, playerName: string): void {
-    if (confirm(`Fjern ${playerName} fra raid?`)) {
+    if (confirm(`Remove ${playerName} from raid?`)) {
       this.raidService.removeSignup(dayId, playerName);
     }
   }
@@ -92,8 +92,8 @@ export class RaidSignup {
     if (!day) return;
 
     const message = day.signups.length > 0
-      ? `Er du sikker på at du vil slette ${day.day} ${day.date}? Der er ${day.signups.length} tilmeldinger.`
-      : `Er du sikker på at du vil slette ${day.day} ${day.date}?`;
+      ? `Are you sure you want to delete ${day.day} ${day.date}? There are ${day.signups.length} sign-ups.`
+      : `Are you sure you want to delete ${day.day} ${day.date}?`;
 
     if (confirm(message)) {
       this.raidService.deleteDay(dayId);
