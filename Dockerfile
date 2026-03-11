@@ -9,9 +9,12 @@ COPY . .
 ARG SUPABASE_URL
 ARG SUPABASE_KEY
 
-# Replace environment variables in the file before building
-RUN sed -i "s|supabaseUrl:.*|supabaseUrl: '${SUPABASE_URL}',|" src/environments/environment.ts && \
-    sed -i "s|supabaseKey:.*|supabaseKey: '${SUPABASE_KEY}'|" src/environments/environment.ts
+# Create environment file with build-time variables
+RUN echo "export const environment = {" > src/environments/environment.ts && \
+    echo "  production: true," >> src/environments/environment.ts && \
+    echo "  supabaseUrl: '${SUPABASE_URL}'," >> src/environments/environment.ts && \
+    echo "  supabaseKey: '${SUPABASE_KEY}'" >> src/environments/environment.ts && \
+    echo "};" >> src/environments/environment.ts
 
 RUN npm run build
 
