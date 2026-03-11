@@ -2,7 +2,8 @@
   <div class="roster-header">
     <h3>👥 TimeSkip Guild Roster (Ravencrest-EU)</h3>
     <div class="roster-controls">
-      <input type="text" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" placeholder="Search player...">
+      <input type="text" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)"
+        placeholder="Search player...">
       <button (click)="loadRoster()">🔄 Refresh</button>
     </div>
   </div>
