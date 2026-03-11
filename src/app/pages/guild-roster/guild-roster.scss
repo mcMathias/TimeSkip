@@ -1,0 +1,173 @@
+.roster-container {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #333;
+}
+
+.roster-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+
+  h3 {
+    color: #ffd700;
+    font-size: 1.4em;
+  }
+}
+
+.roster-controls {
+  display: flex;
+  gap: 10px;
+
+  input {
+    padding: 10px 15px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #e4e4e4;
+    font-size: 1em;
+
+    &:focus {
+      outline: none;
+      border-color: #ffd700;
+    }
+  }
+
+  button {
+    padding: 10px 20px;
+    background: #666;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover { background: #888; }
+  }
+}
+
+.loading-progress {
+  text-align: center;
+  padding: 10px;
+  color: #ffd700;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.roster-loading {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #333;
+    border-top-color: #ffd700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.roster-error {
+  text-align: center;
+  padding: 30px;
+  color: #f44336;
+
+  h4 { margin-bottom: 10px; }
+
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #ffd700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+}
+
+.roster-stats {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.roster-stat-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px 25px;
+  border-radius: 8px;
+  text-align: center;
+
+  .stat-value {
+    display: block;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #ffd700;
+  }
+
+  .stat-label {
+    color: #aaa;
+    font-size: 0.9em;
+  }
+}
+
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+
+  th {
+    background: rgba(0, 0, 0, 0.3);
+    color: #ffd700;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      background: rgba(255, 215, 0, 0.1);
+    }
+  }
+
+  tr:hover td {
+    background: rgba(255, 215, 0, 0.05);
+  }
+
+  a {
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.ilvl-badge {
+  background: #9c27b0;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85em;
+}
+
+.ilvl-loading {
+  color: #666;
+}
+
+.rio-score {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85em;
+}

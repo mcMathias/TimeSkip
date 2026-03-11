@@ -1,0 +1,156 @@
+<div class="mplus-container">
+  <!-- Week Tabs -->
+  <div class="week-tabs">
+    @for (weekNum of getWeekNumbers(); track weekNum) {
+    <button class="week-tab" [class.active]="currentWeek() === weekNum" (click)="switchWeek(weekNum)">
+      {{ weeks()[weekNum].name }}
+    </button>
+    }
+  </div>
+
+  <!-- Search Panel -->
+  <div class="search-panel">
+    <h3>🔍 Find Din Tilmelding</h3>
+    <div class="search-container">
+      <input type="text" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)"
+        placeholder="Indtast dit character navn...">
+      <button class="btn-clear-search" (click)="searchTerm.set('')">✕ Ryd</button>
+    </div>
+    @if (searchResults().length > 0) {
+    <div class="search-results">
+      <h4>📋 Dine tilmeldinger:</h4>
+      @for (result of searchResults(); track $index) {
+      <div class="search-result-item">
+        <strong>Week {{ result.week }}</strong> - {{ result.day }} - {{ result.group }} - {{ result.role }}
+        @if (result.time) { ({{ result.time }}) }
+      </div>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Stats Dashboard -->
+  <div class="stats-dashboard">
+    <h3>📊 Tilmeldings Statistik (Denne Uge)</h3>
+    <div class="stats-grid">
+      <div class="stat-card tank">
+        <span class="stat-number">{{ stats().tanks }}</span>
+        <span class="stat-label">🛡️ Tanks</span>
+      </div>
+      <div class="stat-card healer">
+        <span class="stat-number">{{ stats().healers }}</span>
+        <span class="stat-label">💚 Healers</span>
+      </div>
+      <div class="stat-card dps">
+        <span class="stat-number">{{ stats().dps }}</span>
+        <span class="stat-label">⚔️ DPS</span>
+      </div>
+      <div class="stat-card total">
+        <span class="stat-number">{{ stats().total }}</span>
+        <span class="stat-label">👥 Total</span>
+      </div>
+      <div class="stat-card groups">
+        <span class="stat-number">{{ stats().fullGroups }}/{{ stats().totalGroups }}</span>
+        <span class="stat-label">✅ Fyldte Grupper</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div class="admin-panel">
+    <h3>🛠️ Admin Kontrol</h3>
+    <div class="admin-controls">
+      <button class="btn-clear" (click)="clearAllData()">🗑️ Ryd Alle Tilmeldinger</button>
+      <button class="btn-add-day" (click)="openNewWeekModal()">➕ Tilføj Ny Uge</button>
+    </div>
+  </div>
+
+  <!-- Days Container -->
+  @if (currentWeekData()) {
+  <div class="days-container">
+    @for (day of currentWeekData()!.days; track $index; let dayIndex = $index) {
+    <div class="day-column">
+      <div class="day-header">
+        <h3>{{ day.date }}</h3>
+        <button class="btn-add-group" (click)="addGroup(dayIndex)">➕ Gruppe</button>
+      </div>
+
+      @for (group of day.groups; track $index; let groupIndex = $index) {
+      <div class="group" [class]="getGroupStatus(group)">
+        <div class="group-header">
+          <span class="group-name">{{ group.name }}</span>
+          <div class="group-actions">
+            <button class="btn-copy" (click)="copyGroupToDiscord(dayIndex, groupIndex)"
+              title="Kopier til Discord">📋</button>
+            @if (day.groups.length > 1) {
+            <button class="btn-remove-group" (click)="removeGroup(dayIndex, groupIndex)" title="Fjern gruppe">✕</button>
+            }
+          </div>
+        </div>
+
+        @for (slot of group.slots; track $index; let slotIndex = $index) {
+        <div class="slot" [class.filled]="slot.player" [class]="slot.role.toLowerCase()"
+          (click)="openSignupModal(dayIndex, groupIndex, slotIndex)">
+          <span class="role-icon">
+            @switch (slot.role) {
+            @case ('Tank') { 🛡️ }
+            @case ('Healer') { 💚 }
+            @case ('Standby') { 📋 }
+            @default { ⚔️ }
+            }
+          </span>
+          <span class="role-name">{{ slot.role }}</span>
+          @if (slot.player) {
+          <span class="player-name">{{ slot.player }}</span>
+          @if (slot.time) {
+          <span class="player-time">{{ slot.time }}</span>
+          }
+          <button class="btn-clear-slot" (click)="clearSlot(dayIndex, groupIndex, slotIndex, $event)">✕</button>
+          } @else {
+          <span class="empty-slot">Klik for at tilmelde</span>
+          }
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
+  </div>
+  }
+</div>
+
+<!-- Signup Modal -->
+<div class="modal" [class.show]="showSignupModal()">
+  <div class="modal-content">
+    <h2>📝 Tilmeld dig</h2>
+    <div class="form-group">
+      <label>Character Navn</label>
+      <input type="text" [ngModel]="playerName()" (ngModelChange)="playerName.set($event)"
+        placeholder="Dit character navn">
+    </div>
+    <div class="form-group">
+      <label>Server Tid (f.eks. 9:00)</label>
+      <input type="text" [ngModel]="serverTime()" (ngModelChange)="serverTime.set($event)" placeholder="HH:MM">
+    </div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" (click)="closeSignupModal()">Annuller</button>
+      <button class="btn-confirm" (click)="confirmSignup()">Tilmeld</button>
+    </div>
+  </div>
+</div>
+
+<!-- New Week Modal -->
+<div class="modal" [class.show]="showNewWeekModal()">
+  <div class="modal-content">
+    <h2>📅 Tilføj Ny Uge</h2>
+    <div class="form-group">
+      <label>Uge Navn</label>
+      <input type="text" [ngModel]="newWeekName()" (ngModelChange)="newWeekName.set($event)"
+        placeholder="F.eks. Week 3">
+    </div>
+    <div class="modal-buttons">
+      <button class="btn-cancel" (click)="closeNewWeekModal()">Annuller</button>
+      <button class="btn-confirm" (click)="confirmNewWeek()">Opret Uge</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,208 @@
+<div class="raid-container">
+  <div class="raid-header">
+    <h3>🏰 Raid Sign-up</h3>
+    <div class="raid-controls">
+      <button class="btn-add-raid" (click)="openAddDayModal()">➕ Tilføj Raid Dag</button>
+      <button (click)="copyToDiscord()">📋 Kopier til Discord</button>
+    </div>
+  </div>
+
+  <div class="raid-info" (click)="openInfoModal()">
+    <h4>{{ info().name }} - {{ info().difficulty }}</h4>
+    <p>Raid tid: {{ info().time }} Server Time</p>
+    <small>✏️ Klik for at redigere</small>
+  </div>
+
+  <div class="raid-stats">
+    <div class="raid-stat-box">
+      <div class="stat-value">{{ stats().raidDays }}</div>
+      <div class="stat-label">Raid Dage</div>
+    </div>
+    <div class="raid-stat-box tanks">
+      <div class="stat-value">{{ stats().tanks }}</div>
+      <div class="stat-label">🛡️ Tanks</div>
+    </div>
+    <div class="raid-stat-box healers">
+      <div class="stat-value">{{ stats().healers }}</div>
+      <div class="stat-label">💚 Healers</div>
+    </div>
+    <div class="raid-stat-box dps">
+      <div class="stat-value">{{ stats().dps }}</div>
+      <div class="stat-label">⚔️ DPS</div>
+    </div>
+    <div class="raid-stat-box maybes">
+      <div class="stat-value">{{ stats().maybes }}</div>
+      <div class="stat-label">❓ Måske</div>
+    </div>
+  </div>
+
+  <div class="raid-days-container">
+    @for (day of days(); track day.id) {
+    <div class="raid-day-card" [class.full]="getTotalConfirmed(day) >= 20">
+      <div class="raid-day-header">
+        <div>
+          <h4>{{ day.day }} {{ day.date }}</h4>
+          <span class="raid-time">🕐 {{ day.time }}</span>
+        </div>
+        <button class="raid-day-delete" (click)="deleteDay(day.id)">🗑️</button>
+      </div>
+
+      <div class="raid-roles">
+        <div class="raid-role-section tanks">
+          <h5>🛡️ Tanks ({{ getConfirmedByRole(day, 'tank').length }}/2)</h5>
+          @for (player of getConfirmedByRole(day, 'tank'); track player.name) {
+          <div class="raid-slot filled" (click)="removeSignup(day.id, player.name)">
+            {{ player.name }}
+            @if (player.spec) { <small>({{ player.spec }})</small> }
+          </div>
+          }
+          @for (i of getEmptySlots(day, 'tank'); track $index) {
+          <div class="raid-slot empty">Ledig plads</div>
+          }
+        </div>
+
+        <div class="raid-role-section healers">
+          <h5>💚 Healers ({{ getConfirmedByRole(day, 'healer').length }}/5)</h5>
+          @for (player of getConfirmedByRole(day, 'healer'); track player.name) {
+          <div class="raid-slot filled" (click)="removeSignup(day.id, player.name)">
+            {{ player.name }}
+            @if (player.spec) { <small>({{ player.spec }})</small> }
+          </div>
+          }
+          @for (i of getEmptySlots(day, 'healer'); track $index) {
+          <div class="raid-slot empty">Ledig plads</div>
+          }
+        </div>
+
+        <div class="raid-role-section dps">
+          <h5>⚔️ DPS ({{ getConfirmedByRole(day, 'dps').length }}/13)</h5>
+          @for (player of getConfirmedByRole(day, 'dps'); track player.name) {
+          <div class="raid-slot filled" (click)="removeSignup(day.id, player.name)">
+            {{ player.name }}
+            @if (player.spec) { <small>({{ player.spec }})</small> }
+          </div>
+          }
+          @for (i of getEmptySlots(day, 'dps'); track $index) {
+          <div class="raid-slot empty">Ledig plads</div>
+          }
+        </div>
+      </div>
+
+      <button class="raid-signup-btn" (click)="openSignupModal(day.id)">➕ Tilmeld dig</button>
+
+      @if (getMaybes(day).length > 0 || getAbsents(day).length > 0) {
+      <div class="raid-bench">
+        @if (getMaybes(day).length > 0) {
+        <h5>❓ Måske ({{ getMaybes(day).length }})</h5>
+        <div class="bench-list">
+          @for (player of getMaybes(day); track player.name) {
+          <span class="bench-player" (click)="removeSignup(day.id, player.name)">
+            {{ player.name }} @if (player.spec) { ({{ player.spec }}) }
+          </span>
+          }
+        </div>
+        }
+        @if (getAbsents(day).length > 0) {
+        <h5 class="mt-1">❌ Afbud ({{ getAbsents(day).length }})</h5>
+        <div class="bench-list">
+          @for (player of getAbsents(day); track player.name) {
+          <span class="bench-player absent" (click)="removeSignup(day.id, player.name)">{{ player.name }}</span>
+          }
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>
+
+<-rwxr-xr-x Signup Modal -->
+  <div class="modal" [class.show]="showSignupModal()">
+    <div class="modal-content">
+      <h2>📝 Raid Tilmelding</h2>
+      <div class="form-group">
+        <label>Character Navn</label>
+        <input type="text" [ngModel]="playerName()" (ngModelChange)="playerName.set($event)"
+          placeholder="Dit character navn">
+      </div>
+      <div class="form-group">
+        <label>Rolle</label>
+        <select [ngModel]="playerRole()" (ngModelChange)="playerRole.set($event)">
+          <option value="tank">🛡️ Tank</option>
+          <option value="healer">💚 Healer</option>
+          <option value="dps">⚔️ DPS</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select [ngModel]="playerStatus()" (ngModelChange)="playerStatus.set($event)">
+          <option value="coming">✅ Kommer</option>
+          <option value="maybe">❓ Måske</option>
+          <option value="absent">❌ Afbud</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Spec/Klasse (valgfrit)</label>
+        <input type="text" [ngModel]="playerSpec()" (ngModelChange)="playerSpec.set($event)"
+          placeholder="F.eks. Holy Paladin">
+      </div>
+      <div class="modal-buttons">
+        <button class="btn-cancel" (click)="closeSignupModal()">Annuller</button>
+        <button class="btn-confirm" (click)="confirmSignup()">Tilmeld</button>
+      </div>
+    </div>
+  </div>
+
+  <-rwxr-xr-x Add Day Modal -->
+    <div class="modal" [class.show]="showAddDayModal()">
+      <div class="modal-content">
+        <h2>📅 Tilføj Raid Dag</h2>
+        <div class="form-group">
+          <label>Dag</label>
+          <select [ngModel]="newRaidDay()" (ngModelChange)="newRaidDay.set($event)">
+            <option value="Mandag">Mandag</option>
+            <option value="Onsdag">Onsdag</option>
+            <option value="Torsdag">Torsdag</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Dato (f.eks. 16.3.2026)</label>
+          <input type="text" [ngModel]="newRaidDate()" (ngModelChange)="newRaidDate.set($event)"
+            placeholder="DD.MM.YYYY">
+        </div>
+        <div class="modal-buttons">
+          <button class="btn-cancel" (click)="closeAddDayModal()">Annuller</button>
+          <button class="btn-confirm" (click)="confirmAddDay()">Tilføj</button>
+        </div>
+      </div>
+    </div>
+
+    <-rwxr-xr-x Info Modal -->
+      <div class="modal" [class.show]="showInfoModal()">
+        <div class="modal-content">
+          <h2>⚙️ Raid Indstillinger</h2>
+          <div class="form-group">
+            <label>Raid Navn</label>
+            <input type="text" [ngModel]="infoName()" (ngModelChange)="infoName.set($event)"
+              placeholder="F.eks. Liberation of Undermine">
+          </div>
+          <div class="form-group">
+            <label>Difficulty</label>
+            <select [ngModel]="infoDifficulty()" (ngModelChange)="infoDifficulty.set($event)">
+              <option value="Normal">Normal</option>
+              <option value="Heroic">Heroic</option>
+              <option value="Mythic">Mythic</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Standard Raid Tid</label>
+            <input type="text" [ngModel]="infoTime()" (ngModelChange)="infoTime.set($event)"
+              placeholder="F.eks. 19:45 - 23:00">
+          </div>
+          <div class="modal-buttons">
+            <button class="btn-cancel" (click)="closeInfoModal()">Annuller</button>
+            <button class="btn-confirm" (click)="saveInfo()">Gem</button>
+          </div>
+        </div>
+      </div>

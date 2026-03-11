@@ -1,0 +1,75 @@
+<div class="roster-container">
+  <div class="roster-header">
+    <h3>👥 TimeSkip Guild Roster (Ravencrest-EU)</h3>
+    <div class="roster-controls">
+      <input type="text" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" placeholder="Søg spiller...">
+      <button (click)="loadRoster()">🔄 Opdater</button>
+    </div>
+  </div>
+
+  @if (loadingProgress()) {
+  <div class="loading-progress">{{ loadingProgress() }}</div>
+  }
+
+  @if (loading() && !roster().length) {
+  <div class="roster-loading">
+    <div class="spinner"></div>
+    <p>Henter guild data fra Raider.io...</p>
+  </div>
+  } @else if (error()) {
+  <div class="roster-error">
+    <h4>❌ Kunne ikke hente guild data</h4>
+    <p>{{ error() }}</p>
+    <button (click)="loadRoster()">🔄 Prøv igen</button>
+  </div>
+  } @else {
+  <div class="roster-stats">
+    <div class="roster-stat-box">
+      <span class="stat-value">{{ roster().length }}</span>
+      <span class="stat-label">Medlemmer</span>
+    </div>
+  </div>
+
+  <table class="roster-table">
+    <thead>
+      <tr>
+        <th (click)="sortBy('name')">Navn</th>
+        <th (click)="sortBy('class')">Klasse</th>
+        <th>Spec</th>
+        <th (click)="sortBy('ilvl')">iLvl</th>
+        <th (click)="sortBy('rio')">M+ Score</th>
+        <th>Rank</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (member of filteredRoster(); track member.character.name) {
+      <tr>
+        <td>
+          <a [href]="'https://raider.io/characters/eu/ravencrest/' + member.character.name" target="_blank"
+            [class]="'class-' + getClassSlug(member.character.class)">
+            {{ member.character.name }}
+          </a>
+        </td>
+        <td [class]="'class-' + getClassSlug(member.character.class)">
+          {{ member.character.class || '?' }}
+        </td>
+        <td>{{ member.character.active_spec_name || '?' }}</td>
+        <td>
+          @if (getIlvl(member)) {
+          <span class="ilvl-badge">{{ getIlvl(member) }}</span>
+          } @else {
+          <span class="ilvl-loading">⏳</span>
+          }
+        </td>
+        <td>
+          <span class="rio-score" [class]="'rio-' + getRioColor(member)">
+            {{ getRioScore(member) | number:'1.0-0' }}
+          </span>
+        </td>
+        <td>{{ getRankName(member.rank) }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+</div>
