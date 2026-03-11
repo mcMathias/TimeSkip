@@ -5,15 +5,12 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 
-# Build args for environment variables
-ARG SUPABASE_URL
-ARG SUPABASE_KEY
-
-# Create environment file with build-time variables
+# Create production environment file with Supabase credentials
+# (anon key is safe to expose - it's a publishable key, RLS protects data)
 RUN echo "export const environment = {" > src/environments/environment.ts && \
     echo "  production: true," >> src/environments/environment.ts && \
-    echo "  supabaseUrl: '${SUPABASE_URL}'," >> src/environments/environment.ts && \
-    echo "  supabaseKey: '${SUPABASE_KEY}'" >> src/environments/environment.ts && \
+    echo "  supabaseUrl: 'https://nksowzlfcdnzryqgfuyo.supabase.co'," >> src/environments/environment.ts && \
+    echo "  supabaseKey: 'sb_publishable_WL23JdJwheOcrBQ_Da6cuw_Vh7ek5xF'" >> src/environments/environment.ts && \
     echo "};" >> src/environments/environment.ts
 
 RUN npm run build
