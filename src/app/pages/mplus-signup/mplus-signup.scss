@@ -20,13 +20,16 @@
   transition: all 0.3s;
   font-weight: bold;
 
-  &:hover, &.active {
+  &:hover,
+  &.active {
     background: #ffd700;
     color: #1a1a2e;
   }
 }
 
-.search-panel, .stats-dashboard, .admin-panel {
+.search-panel,
+.stats-dashboard,
+.admin-panel {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   padding: 20px;
@@ -109,11 +112,25 @@
   text-align: center;
   border: 2px solid transparent;
 
-  &.tank { border-color: #4fc3f7; }
-  &.healer { border-color: #81c784; }
-  &.dps { border-color: #e57373; }
-  &.total { border-color: #ffd700; }
-  &.groups { border-color: #4caf50; }
+  &.tank {
+    border-color: #4fc3f7;
+  }
+
+  &.healer {
+    border-color: #81c784;
+  }
+
+  &.dps {
+    border-color: #e57373;
+  }
+
+  &.total {
+    border-color: #ffd700;
+  }
+
+  &.groups {
+    border-color: #4caf50;
+  }
 
   .stat-number {
     display: block;
@@ -145,13 +162,19 @@
   .btn-clear {
     background: #f44336;
     color: white;
-    &:hover { background: #d32f2f; }
+
+    &:hover {
+      background: #d32f2f;
+    }
   }
 
   .btn-add-day {
     background: #4caf50;
     color: white;
-    &:hover { background: #388e3c; }
+
+    &:hover {
+      background: #388e3c;
+    }
   }
 }
 
@@ -159,15 +182,15 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 15px;
-  
+
   @media (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   @media (max-width: 500px) {
     grid-template-columns: 1fr;
   }
@@ -203,7 +226,9 @@
     cursor: pointer;
     font-size: 0.8em;
 
-    &:hover { background: #388e3c; }
+    &:hover {
+      background: #388e3c;
+    }
   }
 }
 
@@ -215,9 +240,17 @@
   border: 2px solid #444;
   transition: border-color 0.3s;
 
-  &.full { border-color: #4caf50; }
-  &.partial { border-color: #ff9800; }
-  &.empty { border-color: #f44336; }
+  &.full {
+    border-color: #4caf50;
+  }
+
+  &.partial {
+    border-color: #ff9800;
+  }
+
+  &.empty {
+    border-color: #f44336;
+  }
 }
 
 .group-header {
@@ -277,10 +310,21 @@
     border-color: #4caf50;
   }
 
-  &.tank { border-left: 3px solid #4fc3f7; }
-  &.healer { border-left: 3px solid #81c784; }
-  &.dps { border-left: 3px solid #e57373; }
-  &.standby { border-left: 3px solid #ff9800; }
+  &.tank {
+    border-left: 3px solid #4fc3f7;
+  }
+
+  &.healer {
+    border-left: 3px solid #81c784;
+  }
+
+  &.dps {
+    border-left: 3px solid #e57373;
+  }
+
+  &.standby {
+    border-left: 3px solid #ff9800;
+  }
 
   .role-icon {
     font-size: 1.2em;

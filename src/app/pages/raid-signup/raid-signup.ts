@@ -72,7 +72,7 @@ export class RaidSignup {
   }
 
   openAddDayModal(): void {
-    this.newRaidDay.set('Mandag');
+    this.newRaidDay.set('Monday');
     this.newRaidDate.set('');
     this.showAddDayModal.set(true);
   }
