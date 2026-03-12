@@ -1,114 +1,116 @@
 <div class="home-container">
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <div class="guild-emblem">
-        <img src="https://render.worldofwarcraft.com/eu/icons/56/inv_10_misc_dragonorb_color1.jpg" alt="TimeSkip Emblem" class="emblem-icon">
-      </div>
-      <h1 class="guild-name">
-        <span class="guild-prefix">&lt;</span>TimeSkip<span class="guild-suffix">&gt;</span>
-      </h1>
-      <p class="guild-tagline">Ravencrest EU • Alliance</p>
-      <p class="guild-mission">Progress through friendship — dominating Mythic+ and Heroic Raiding</p>
-      
-      <div class="hero-cta">
-        <a routerLink="/mplus" class="cta-button primary">
-          <span class="cta-icon">🔑</span>
-          M+ Sign-up
-        </a>
-        <a routerLink="/raid" class="cta-button secondary">
-          <span class="cta-icon">🏰</span>
-          Raid Sign-up
-        </a>
-      </div>
-    </div>
-    
-    <div class="hero-stats">
-      <div class="stat-card">
-        <span class="stat-value">{{ guildStats().members }}</span>
-        <span class="stat-label">Raiders</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value">{{ guildStats().avgIlvl }}</span>
-        <span class="stat-label">Avg iLvl</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value">{{ guildStats().raidProgress }}</span>
-        <span class="stat-label">Progress</span>
-      </div>
-    </div>
-  </section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="guild-emblem">
+                <img src="https://render.worldofwarcraft.com/eu/icons/56/inv_10_misc_dragonorb_color1.jpg"
+                    alt="TimeSkip Emblem" class="emblem-icon">
+            </div>
+            <h1 class="guild-name">
+                <span class="guild-prefix">&lt;</span>TimeSkip<span class="guild-suffix">&gt;</span>
+            </h1>
+            <p class="guild-tagline">Ravencrest EU • Alliance</p>
 
-  <!-- Quick Links Section -->
-  <section class="quick-links">
-    <h2 class="section-title">
-      <span class="title-icon">⚔️</span>
-      Quick Actions
-    </h2>
-    <div class="links-grid">
-      @for (link of quickLinks; track link.route) {
-        <a [routerLink]="link.route" class="link-card">
-          <span class="link-icon">{{ link.icon }}</span>
-          <div class="link-info">
-            <h3>{{ link.title }}</h3>
-            <p>{{ link.desc }}</p>
-          </div>
-          <span class="link-arrow">→</span>
-        </a>
-      }
-    </div>
-  </section>
-
-  <!-- Announcements Section -->
-  <section class="announcements">
-    <h2 class="section-title">
-      <span class="title-icon">📢</span>
-      Guild Announcements
-    </h2>
-    <div class="announcements-list">
-      @for (announcement of announcements(); track announcement.id) {
-        <div class="announcement-card" [class]="'type-' + announcement.type">
-          <div class="announcement-header">
-            <h3>{{ announcement.title }}</h3>
-            <span class="announcement-date">{{ announcement.date }}</span>
-          </div>
-          <p class="announcement-message">{{ announcement.message }}</p>
+            <div class="hero-cta">
+                <a routerLink="/mplus" class="cta-button primary">
+                    <span class="cta-icon">🔑</span>
+                    M+ Sign-up
+                </a>
+                <a routerLink="/raid" class="cta-button secondary">
+                    <span class="cta-icon">🏰</span>
+                    Raid Sign-up
+                </a>
+            </div>
         </div>
-      }
-    </div>
-  </section>
 
-  <!-- Features Preview -->
-  <section class="features">
-    <h2 class="section-title">
-      <span class="title-icon">✨</span>
-      Guild Tools
-    </h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🗓️</div>
-        <h3>Weekly M+ Scheduler</h3>
-        <p>Plan your keys for Wednesday to Sunday. Sign up with your character and let the group know your availability.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h3>Raid Roster Management</h3>
-        <p>Sign up for raid nights with status indicators. Officers can see attendance and plan compositions.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">👥</div>
-        <h3>Live Guild Roster</h3>
-        <p>Real-time guild member data from Raider.io. See item levels, M+ scores, and raid progress.</p>
-      </div>
-    </div>
-  </section>
+        <div class="hero-stats">
+            <div class="stat-card">
+                <span class="stat-value">{{ guildStats().members }}</span>
+                <span class="stat-label">Raiders</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ guildStats().avgIlvl }}</span>
+                <span class="stat-label">Avg iLvl</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">{{ guildStats().raidProgress }}</span>
+                <span class="stat-label">Progress</span>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="home-footer">
-    <div class="footer-content">
-      <p class="footer-guild">&lt;TimeSkip&gt; — Ravencrest EU</p>
-      <p class="footer-credits">Powered by Raider.io • Built with ❤️ for our guild</p>
-    </div>
-  </footer>
+    <!-- Quick Links Section -->
+    <section class="quick-links">
+        <h2 class="section-title">
+            <span class="title-icon">⚔️</span>
+            Quick Actions
+        </h2>
+        <div class="links-grid">
+            @for (link of quickLinks; track link.route) {
+            <a [routerLink]="link.route" class="link-card">
+                <span class="link-icon">{{ link.icon }}</span>
+                <div class="link-info">
+                    <h3>{{ link.title }}</h3>
+                    <p>{{ link.desc }}</p>
+                </div>
+                <span class="link-arrow">→</span>
+            </a>
+            }
+        </div>
+    </section>
+
+    <!-- Announcements Section -->
+    <section class="announcements">
+        <h2 class="section-title">
+            <span class="title-icon">📢</span>
+            Guild Announcements
+        </h2>
+        <div class="announcements-list">
+            @for (announcement of announcements(); track announcement.id) {
+            <div class="announcement-card" [class]="'type-' + announcement.type">
+                <div class="announcement-header">
+                    <h3>{{ announcement.title }}</h3>
+                    <span class="announcement-date">{{ announcement.date }}</span>
+                </div>
+                <p class="announcement-message">{{ announcement.message }}</p>
+            </div>
+            }
+        </div>
+    </section>
+
+    <!-- Features Preview -->
+    <section class="features">
+        <h2 class="section-title">
+            <span class="title-icon">✨</span>
+            Guild Tools
+        </h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🗓️</div>
+                <h3>Weekly M+ Scheduler</h3>
+                <p>Plan your keys for Wednesday to Sunday. Sign up with your character and let the group know your
+                    availability.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Raid Roster Management</h3>
+                <p>Sign up for raid nights with status indicators. Officers can see attendance and plan compositions.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Live Guild Roster</h3>
+                <p>Real-time guild member data from Raider.io. See item levels, M+ scores, and raid progress.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="home-footer">
+        <div class="footer-content">
+            <p class="footer-guild">&lt;TimeSkip&gt; — Ravencrest EU</p>
+            <p class="footer-credits">Powered by Raider.io • Built with ❤️ for our guild</p>
+        </div>
+    </footer>
 </div>
