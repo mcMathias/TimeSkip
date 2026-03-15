@@ -28,7 +28,7 @@ export class Home implements OnInit {
         },
         {
             id: 2,
-            title: '🏰 Heroic Liberation of Undermine',
+            title: '🏰 The Voidspire',
             message: 'Raid nights: Mon/Wed/Thu 19:45-23:00 Server Time.',
             date: 'March 10, 2026',
             type: 'raid',

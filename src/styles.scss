@@ -6,41 +6,157 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: #0a0a12;
   min-height: 100vh;
   color: #e4e4e4;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url('/logo.png') center center no-repeat;
+    background-size: 80% auto;
+    opacity: 0.08;
+    filter: blur(2px);
+    pointer-events: none;
+    z-index: 0;
+    animation: globalBgPulse 8s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 20%, #0a0a12 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+@keyframes globalBgPulse {
+
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.12;
+    transform: scale(1.02);
+  }
 }
 
 // WoW Class Colors
-.class-death-knight { color: #C41E3A; }
-.class-demon-hunter { color: #A330C9; }
-.class-druid { color: #FF7C0A; }
-.class-evoker { color: #33937F; }
-.class-hunter { color: #AAD372; }
-.class-mage { color: #3FC7EB; }
-.class-monk { color: #00FF98; }
-.class-paladin { color: #F48CBA; }
-.class-priest { color: #FFFFFF; }
-.class-rogue { color: #FFF468; }
-.class-shaman { color: #0070DD; }
-.class-warlock { color: #8788EE; }
-.class-warrior { color: #C69B6D; }
+.class-death-knight {
+  color: #C41E3A;
+}
+
+.class-demon-hunter {
+  color: #A330C9;
+}
+
+.class-druid {
+  color: #FF7C0A;
+}
+
+.class-evoker {
+  color: #33937F;
+}
+
+.class-hunter {
+  color: #AAD372;
+}
+
+.class-mage {
+  color: #3FC7EB;
+}
+
+.class-monk {
+  color: #00FF98;
+}
+
+.class-paladin {
+  color: #F48CBA;
+}
+
+.class-priest {
+  color: #FFFFFF;
+}
+
+.class-rogue {
+  color: #FFF468;
+}
+
+.class-shaman {
+  color: #0070DD;
+}
+
+.class-warlock {
+  color: #8788EE;
+}
+
+.class-warrior {
+  color: #C69B6D;
+}
 
 // Rio Score Colors
-.rio-gray { background: #666; color: white; }
-.rio-green { background: #1eff00; color: black; }
-.rio-blue { background: #0070dd; color: white; }
-.rio-purple { background: #a335ee; color: white; }
-.rio-orange { background: #ff8000; color: white; }
-.rio-pink { background: #e268a8; color: white; }
-.rio-red { background: #ff4040; color: white; }
+.rio-gray {
+  background: #666;
+  color: white;
+}
+
+.rio-green {
+  background: #1eff00;
+  color: black;
+}
+
+.rio-blue {
+  background: #0070dd;
+  color: white;
+}
+
+.rio-purple {
+  background: #a335ee;
+  color: white;
+}
+
+.rio-orange {
+  background: #ff8000;
+  color: white;
+}
+
+.rio-pink {
+  background: #e268a8;
+  color: white;
+}
+
+.rio-red {
+  background: #ff4040;
+  color: white;
+}
 
 // Utility classes
-.text-center { text-align: center; }
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
+.text-center {
+  text-align: center;
+}
+
+.mt-1 {
+  margin-top: 0.5rem;
+}
+
+.mt-2 {
+  margin-top: 1rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-2 {
+  margin-bottom: 1rem;
+}
 
 // Toast
 .toast {
@@ -105,7 +221,8 @@ body {
     font-size: 0.9em;
   }
 
-  input, select {
+  input,
+  select {
     width: 100%;
     padding: 12px;
     border: 2px solid #333;
